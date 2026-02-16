@@ -1,0 +1,30 @@
+{
+  "name": "multi-agent-demo-api",
+  "version": "1.0.0",
+  "description": "Demo API for multi-agent code review workflow showing how three specialized agents collaborate to identify security vulnerabilities, code quality issues, and missing documentation",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "demo",
+    "agent",
+    "code-review",
+    "security",
+    "github-agent-hq"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
