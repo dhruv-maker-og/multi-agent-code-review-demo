@@ -55,20 +55,24 @@ curl "http://localhost:3000/api/users/list"
 ### 4. Test Vulnerabilities (5 minutes)
 
 **SQL Injection Test**:
-```bash
+```powershell
+# Windows PowerShell - use curl.exe with URL-encoded single quotes (%27)
+curl.exe "http://localhost:3000/api/users/search?username=%27%20OR%20%271%27=%271"
+
+# Linux/Mac bash
 curl "http://localhost:3000/api/users/search?username=' OR '1'='1"
 ```
 Should return all users (confirms SQL injection vulnerability).
 
 **Missing Authentication Test**:
-```bash
-curl "http://localhost:3000/api/users/admin/getAllUsers"
+```powershell
+curl.exe "http://localhost:3000/api/users/admin/getAllUsers"
 ```
 Should succeed without auth header (confirms missing authentication).
 
 **Data Exposure Test**:
-```bash
-curl "http://localhost:3000/api/users/list"
+```powershell
+curl.exe "http://localhost:3000/api/users/list"
 ```
 Response should include `password_hash` and `api_key` fields (confirms data exposure).
 

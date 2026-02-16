@@ -28,22 +28,24 @@
 Test each vulnerability manually:
 
 ### SQL Injection
-- [ ] Test: `curl "http://localhost:3000/api/users/search?username=' OR '1'='1"`
+- [ ] Test (Windows PowerShell): `curl.exe "http://localhost:3000/api/users/search?username=%27%20OR%20%271%27=%271"`
+- [ ] Test (Linux/Mac): `curl "http://localhost:3000/api/users/search?username=' OR '1'='1"`
 - [ ] Should return all users (vulnerability confirmed)
 - [ ] Take screenshot for demo backup
 
 ### Missing Authentication
-- [ ] Test: `curl "http://localhost:3000/api/users/admin/getAllUsers"`
+- [ ] Test: `curl.exe "http://localhost:3000/api/users/admin/getAllUsers"`
 - [ ] Should succeed without auth header (vulnerability confirmed)
 - [ ] Take screenshot for demo backup
 
 ### Data Exposure
-- [ ] Test: `curl "http://localhost:3000/api/users/list"`
+- [ ] Test: `curl.exe "http://localhost:3000/api/users/list"`
 - [ ] Response includes `password_hash` field (vulnerability confirmed)
 - [ ] Take screenshot for demo backup
 
 ### Authorization Issues
-- [ ] Test: `curl -X POST "http://localhost:3000/api/users/update" -H "Content-Type: application/json" -d '{"userId": 2, "email": "hacked@example.com"}'`
+- [ ] Test (Windows PowerShell): Store JSON in variable then POST: `$body = '{"userId": 2, "email": "hacked@example.com"}'; curl.exe -X POST "http://localhost:3000/api/users/update" -H "Content-Type: application/json" -d $body`
+- [ ] Test (Linux/Mac): `curl -X POST "http://localhost:3000/api/users/update" -H "Content-Type: application/json" -d '{"userId": 2, "email": "hacked@example.com"}'`
 - [ ] Should succeed without authentication (vulnerability confirmed)
 
 ## Pull Request
