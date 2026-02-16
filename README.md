@@ -80,21 +80,37 @@ Server runs on `http://localhost:3000`
 
 ### Test the Vulnerabilities
 
+**Quick Test (Recommended)**:
+```powershell
+# Windows PowerShell
+.\test-vulnerabilities.ps1
+
+# Linux/Mac
+chmod +x test-vulnerabilities.sh
+./test-vulnerabilities.sh
+```
+
+**Manual Testing**:
+
 **SQL Injection**:
-```bash
+```powershell
+# Windows PowerShell
+curl.exe "http://localhost:3000/api/users/search?username=%27%20OR%20%271%27=%271"
+
+# Linux/Mac bash
 curl "http://localhost:3000/api/users/search?username=' OR '1'='1"
 ```
 Returns all users (bypasses intended query logic).
 
 **Missing Authentication**:
-```bash
-curl "http://localhost:3000/api/users/admin/getAllUsers"
+```powershell
+curl.exe "http://localhost:3000/api/users/admin/getAllUsers"
 ```
 Succeeds without any authentication.
 
 **Data Exposure**:
-```bash
-curl "http://localhost:3000/api/users/list"
+```powershell
+curl.exe "http://localhost:3000/api/users/list"
 ```
 Returns password hashes and API keys.
 
@@ -123,7 +139,14 @@ Update user email address.
 ```
 
 **Example**:
-```bash
+```powershell
+# Windows PowerShell
+$body = '{"userId": 1, "email": "new@example.com"}'
+curl.exe -X POST "http://localhost:3000/api/users/update" `
+  -H "Content-Type: application/json" `
+  -d $body
+
+# Linux/Mac bash
 curl -X POST "http://localhost:3000/api/users/update" \
   -H "Content-Type: application/json" \
   -d '{"userId": 1, "email": "new@example.com"}'

